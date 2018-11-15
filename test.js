@@ -8,9 +8,12 @@ let space_ship;
 let state;
 let left, right, up, down;
 let projectile_array = [];
+let meteorite_array = [];
 //Vars for general speed and movements
 let booster_on=false;
 let projectile_speed_mul = 7;
+let elapsed_time = 0;
+let next_meteorite = 9;
 
 
 document.body.appendChild(app.view);
@@ -38,7 +41,7 @@ function setup()
     space_ship.y = 200;
     space_ship.linear_friction = 0.04;
     //How much the linear speed will increment
-    space_ship.linear_acc = 5;
+    space_ship.linear_acc = 3;
     space_ship.vx = 0;
     space_ship.vy = 0;
     space_ship.anchor.x = 0.5;
@@ -59,6 +62,8 @@ function setup()
     down = keyboard("ArrowDown");
     //CTRL for fire
     fire = keyboard("Control");
+    //Space for debug
+    space = keyboard(" ");
 
 
     //Manage the keyboard events    
@@ -87,6 +92,13 @@ function setup()
         space_ship.av = 0;
     };
 
+    //Debug the meteorite generator
+    space.press = () => {
+        console.log("Should spawn");
+        spawnMeteorite();
+    }
+    
+
     //I don't think a spaceship can go backward
   /*down.press = () => {
         space_ship.vy = space_ship.linear_acc;
@@ -94,6 +106,7 @@ function setup()
     down.release = () => {
         space_ship.vy = 0;
     };*/
+
 
     //Set the game state
     state = play;
@@ -151,13 +164,37 @@ function fireBullet()
     
 }
 
-function spawnMeteorite()
+function spawnMeteorite(dim = 20)
 {
     let meteorite_draw = new PIXI.Graphics();
-    meteoride_draw.lineStyle(5, 0xFFFFFF);
-    
+    meteorite_draw.lineStyle(5, 0xFFFFFF);
+    temp_x = randomNumber(width);
+    temp_y = randomNumber(height);
+    meteorite_draw.drawCircle(temp_x, temp_y, dim);
 
+    meteorite = new PIXI.Sprite(meteorite_draw.generateCanvasTexture());
+    meteorite.x = temp_x;
+    meteorite.y = temp_y;
+
+    meteorite.vx = randomNumber(randomNumber(1.5, -1.5));
+    meteorite.vy = randomNumber(randomNumber(1.5,-1.5));
     
+    meteorite.isFirst = true;
+
+    meteorite.colpito = false;
+
+
+    meteorite_array.push(meteorite);
+    app.stage.addChild(meteorite);
+    
+    return meteorite
+    
+}
+
+//Random number generator with max as upperbound
+function randomNumber(max, min=0)
+{
+    return Math.random() * (max - min) + min;
 }
 
 function gameLoop(delta)
@@ -168,12 +205,28 @@ function gameLoop(delta)
 
 function play(delta)
 {
+    //time counter
+    elapsed_time+=delta;
+
+    if(elapsed_time/60 > next_meteorite)
+    {
+        if(meteorite_array.length < 6)
+            spawnMeteorite();
+        elapsed_time=0;
+        next_meteorite = randomNumber(3,8);
+    }
+    
+
+    //if(elapsed_time/60 == randomNumber())
+
+
     //Refresh the speed vectory every frame
     refreshVelocity();
     space_ship.x += space_ship.vx;
     space_ship.y += space_ship.vy;
-    infitifyCoord(space_ship);
     space_ship.rotation += space_ship.av;
+    infinitifyCoord(space_ship);
+    
 
     //Bullet speed management
     for(i=0;i<projectile_array.length; i++)
@@ -190,7 +243,75 @@ function play(delta)
              projectile_array.splice(i,1);
         }
         else
-            infitifyCoord(aux);
+            infinitifyCoord(aux);
+    }
+
+    //Meteorite management
+    for(i=0;i<meteorite_array.length; i++)
+    {
+        
+        let aux = meteorite_array[i];
+
+        //Collision Manager
+        if(hitTestRectangle(aux, space_ship) && !aux.colpito)
+        {
+            app.stage.removeChild(space_ship);
+            app.stage.removeChild(aux);
+        }
+        
+        for(j = 0; j<projectile_array.length; j++)
+        {
+            aux2 = projectile_array[j];
+            if(hitTestRectangle(aux, aux2)) 
+            {
+                console.log("Colpito")
+                app.stage.removeChild(aux2);
+                projectile_array.splice(j,1);
+                
+                old_x = aux.x
+                old_y = aux.y
+                //app.stage.removeChild(aux);
+                meteorite_array.splice(i,1);
+
+                //Spawn 2 new meteorites from the one destroyed
+                if(aux.isFirst)
+                {
+                    met1 = spawnMeteorite(13);
+                    met2 = spawnMeteorite(13)    
+                        
+                    met1.x = old_x;
+                    met1.y = old_y;
+                    met2.x = old_x;
+                    met2.y = old_y;
+                    met2.vx = -met1.vx;
+                    met2.vy = -met1.vy;
+                    met1.isFirst = false;
+                    met2.isFirst = false;
+                    meteorite_array.push(met1);
+                    meteorite_array.push(met2);
+                    app.stage.addChild(met1);
+                    app.stage.addChild(met2);
+                    
+                    
+                }
+                
+                aux.colpito = false;
+            }
+            
+        }
+
+  
+        
+        if(!aux.colpito)
+        {
+            aux.x += aux.vx;
+            aux.y += aux.vy;
+            aux.vx += randomNumber(0.05, -0.05); 
+            aux.vy += randomNumber(0.05, -0.05);
+            infinitifyCoord(aux);
+        }
+        
+        
 
     }
 }
@@ -198,7 +319,7 @@ function play(delta)
 //Videogame effect: no boundaries in the screen
 //I made a function so everytime you need to move somethig
 //you pass the latter as the argument
-function infitifyCoord(obj)
+function infinitifyCoord(obj)
 {
     if(obj.x > width || obj.x < 0)
     {
@@ -259,6 +380,59 @@ function keyboard(value)
     };
     
     return key;
+  }
+
+//Collision detection
+function hitTestRectangle(r1, r2) 
+  {
+
+    //Define the variables we'll need to calculate
+    let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+  
+    //hit will determine whether there's a collision
+    hit = false;
+  
+    //Find the center points of each sprite
+    r1.centerX = r1.x + r1.width / 2;
+    r1.centerY = r1.y + r1.height / 2;
+    r2.centerX = r2.x + r2.width / 2;
+    r2.centerY = r2.y + r2.height / 2;
+  
+    //Find the half-widths and half-heights of each sprite
+    r1.halfWidth = r1.width / 2;
+    r1.halfHeight = r1.height / 2;
+    r2.halfWidth = r2.width / 2;
+    r2.halfHeight = r2.height / 2;
+  
+    //Calculate the distance vector between the sprites
+    vx = r1.centerX - r2.centerX;
+    vy = r1.centerY - r2.centerY;
+  
+    //Figure out the combined half-widths and half-heights
+    combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+    combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+  
+    //Check for a collision on the x axis
+    if (Math.abs(vx) < combinedHalfWidths) {
+  
+      //A collision might be occurring. Check for a collision on the y axis
+      if (Math.abs(vy) < combinedHalfHeights) {
+  
+        //There's definitely a collision happening
+        hit = true;
+      } else {
+  
+        //There's no collision on the y axis
+        hit = false;
+      }
+    } else {
+  
+      //There's no collision on the x axis
+      hit = false;
+    }
+  
+    //`hit` will be either `true` or `false`
+    return hit;
   }
 
 
