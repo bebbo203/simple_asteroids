@@ -2,6 +2,15 @@
 
 let width = 800;
 let height = 800;
+let background;
+
+//I need a var for the virtual screen
+//gameScreen dimensions
+gameScreen_x = 500;
+gameScreen_y = 800;
+//gameScreen origin
+gameScreen_ox = 300;
+gameScreen_oy = 0;
 
 let app = new PIXI.Application({ width: width, height: height });
 let space_ship;
@@ -18,6 +27,7 @@ let next_meteorite = 3;
 let firstStart = true;
 let lives = 3;
 let endGame;
+let points_str;
 
 
 document.body.appendChild(app.view);
@@ -40,10 +50,14 @@ function setup()
     app.stage.addChild(endGame);
     endGame.visible = false;
 
+    //Load the background
+    //background = new PIXI.Sprite.fromImage(document.getElementById("bg").src = "bg.png");
+    background = new PIXI.Sprite.fromImage("bg.png");
+
     //Convert the spaceship drawing to a sprite   
     space_ship = new PIXI.Sprite(triangle.generateCanvasTexture());
-    space_ship.x = 200;
-    space_ship.y = 200;
+    space_ship.x = (gameScreen_x+gameScreen_ox)/2;
+    space_ship.y = (gameScreen_y+gameScreen_oy)/2;
     space_ship.linear_friction = 0.04;
     //How much the linear speed will increment
     space_ship.linear_acc = 3;
@@ -52,16 +66,37 @@ function setup()
     space_ship.anchor.x = 0.5;
     space_ship.anchor.y = 0.5;
     space_ship.rotation = 0;
+    //Angular acceleration
     space_ship.av = 0;
-    space_ship.point = 0;
+    space_ship.points = 0;
+
     
     space_ship.lives = lives;
     //How much the angular speed will increment 
     space_ship.angular_acc = 0.05;
+
+    //Add the points to the screen
+    let style = new PIXI.TextStyle({
+        fontFamily: "Arial",
+        fontSize: 30,
+        fill: "white",
+        stroke: '#ffffff',
+      });
+    points_str = new PIXI.Text(""+space_ship.points, style);
+    points_str.position.set((gameScreen_ox+gameScreen_x)-100, gameScreen_oy+15);
+    app.stage.addChild(points_str);
     
 
     //Add the spaceship sprite to the stage    
     app.stage.addChild(space_ship);
+    app.stage.addChild(background);
+    
+    //DEBUG
+    let cornice_draw = new PIXI.Graphics(true);
+    cornice_draw.lineStyle(2,0xFF0000);
+    cornice_draw.drawRect(gameScreen_ox,gameScreen_oy, gameScreen_x, gameScreen_y)
+    app.stage.addChild(cornice_draw);
+    //DEBUG
 
     //Create lives icon
     for(i=0; i<space_ship.lives; i++)
@@ -70,8 +105,8 @@ function setup()
         live.rotation = -Math.PI/2;
         live.scale.x = 0.7;
         live.scale.y = 0.7;
-        live.x = 20 + i*30;
-        live.y = 45;
+        live.x = gameScreen_ox + 20 + i*30;
+        live.y = gameScreen_oy + 45;
         app.stage.addChild(live);
         lives_array.push(live);
     }
@@ -140,7 +175,7 @@ function setup()
 function refreshVelocity()
 {
     //console.log(space_ship.vx+" "+space_ship.vy);
-    //If booster is on apply a constant acceleration to the ship
+    //If booster is on, apply a constant acceleration to the ship
     if(booster_on)
     {
         space_ship.vy = Math.sin(space_ship.rotation)*space_ship.linear_acc;
@@ -161,6 +196,23 @@ function refreshVelocity()
             space_ship.vx += -1*x_dir*space_ship.linear_friction;
         }
     }
+}
+
+//Helper to update the points string on the screen
+function refreshPoints()
+{
+    //Add the points to the screen
+    app.stage.removeChild(points_str)
+    let style = new PIXI.TextStyle({
+        fontFamily: "Arial",
+        fontSize: 30,
+        fill: "white",
+        stroke: '#ffffff',
+      });
+    points_str = new PIXI.Text(""+space_ship.points, style);
+    points_str.position.set((gameScreen_ox+gameScreen_x)-100, gameScreen_oy+15);
+    app.stage.addChild(points_str);
+
 }
 
 function fireBullet()
@@ -185,23 +237,25 @@ function fireBullet()
     
 }
 
+//Helper to spawn a meteorite in the game
 function spawnMeteorite(dim = 40)
 {
     let meteorite_draw = new PIXI.Graphics();
     meteorite_draw.lineStyle(3, 0xFFFFFF);
-    temp_x = randomNumber(width);
-    temp_y = randomNumber(height);
+    //The randomic number is now corrected so it can fall between the little screen
+    temp_x = randomNumber(gameScreen_ox+gameScreen_x, gameScreen_ox);
+    temp_y = randomNumber(gameScreen_oy+gameScreen_y, gameScreen_oy);
     meteorite_draw.drawCircle(temp_x, temp_y, dim);
 
     meteorite = new PIXI.Sprite(meteorite_draw.generateCanvasTexture());
     meteorite.x = temp_x;
     meteorite.y = temp_y;
-
+    //Initial speed is randomic
     meteorite.vx = randomNumber(randomNumber(1.5, -1.5));
     meteorite.vy = randomNumber(randomNumber(1.5,-1.5));
-    
+    //The meteorite is new so it need to splice if hitted
     meteorite.isFirst = true;
-
+    //Helper for further utilities
     meteorite.colpito = false;
 
 
@@ -225,8 +279,7 @@ function play(delta)
     //time counter
     elapsed_time+=delta;
 
- 
-        
+   
     
 
     if(elapsed_time/60 > next_meteorite)
@@ -236,6 +289,7 @@ function play(delta)
         //Reset the counter so it doesn't overflow
         elapsed_time=0;
         next_meteorite = randomNumber(3,5);
+        
     }
 
     //Refresh the speed vector every frame
@@ -253,7 +307,7 @@ function play(delta)
         aux.y += aux.vy;
         aux.distance += Math.sqrt(aux.vx*aux.vx + aux.vy*aux.vy);
         //Bullet's lifetime is short. It's only alive for "width" space
-        if(aux.distance > width)
+        if(aux.distance > gameScreen_x)
         {
              app.stage.removeChild(aux);
              //If a bullet is dead we need to remove it from the array 
@@ -277,8 +331,8 @@ function play(delta)
             app.stage.removeChild(lives_array.pop());
             lives -= 1;      
             //Spaceship to default position
-            space_ship.x = 200;
-            space_ship.y = 200;
+            space_ship.x = (gameScreen_ox+gameScreen_x)/2;
+            space_ship.y = (gameScreen_oy+gameScreen_y)/2;
             //Delete the asteroid 
             app.stage.removeChild(aux);
             meteorite_array.splice(i,1);
@@ -293,6 +347,7 @@ function play(delta)
             break;
         }
         
+        //Collision Manager METEORITE vs BULLET
         for(j = 0; j<projectile_array.length; j++)
         {
             aux2 = projectile_array[j];
@@ -306,11 +361,13 @@ function play(delta)
                 //Remove the meteorite
                 app.stage.removeChild(aux);
                 meteorite_array.splice(i,1);
-                
-
+                //A little meteorite gives 10 points
+                space_ship.points += 10;
                 //Spawn 2 new meteorites from the one destroyed
                 if(aux.isFirst)
                 {
+                    //A big meteorite gives 5 points (10-5)
+                    space_ship.points -= 5;
                     //One meteorite splits into two meteorites
                     met1 = spawnMeteorite(25);
                     met2 = spawnMeteorite(25);
@@ -340,7 +397,7 @@ function play(delta)
         }
 
         
-        
+        refreshPoints();
 
     }
 }
@@ -349,6 +406,7 @@ function play(delta)
 function endGame_()
 {
     app.stage.removeChild(space_ship);
+    app.stage.removeChild(points_str);
     
     let style = new PIXI.TextStyle({
         fontFamily: "Arial",
@@ -357,7 +415,7 @@ function endGame_()
         stroke: '#ffffff',
       });
     let message = new PIXI.Text("GAME OVER", style);
-    message.position.set(width/2, height/2);
+    message.position.set((gameScreen_ox+gameScreen_x)/2, (gameScreen_oy+gameScreen_y)/2);
     app.stage.addChild(message);
 
     left.unsubscribe();
@@ -370,19 +428,22 @@ function endGame_()
 }
 
 //Videogame effect: no boundaries in the screen
-//I made a function so everytime you need to move somethig
+//I made a function so everytime you need to move something
 //you pass the latter as the argument
 function infinitifyCoord(obj)
 {
-    if(obj.x > width || obj.x < 0)
+    let W = gameScreen_x + gameScreen_ox
+    let H = gameScreen_y + gameScreen_oy
+
+    if(obj.x > W || obj.x < gameScreen_ox)
     {
-        obj.x = width - obj.x;
-        obj.y = height - obj.y;
+        obj.x = W - obj.x + gameScreen_ox;
+        obj.y = H - obj.y + gameScreen_oy;
     }
-    if(obj.y > height || obj.y < 0)
+    if(obj.y > H || obj.y < gameScreen_oy)
     {
-        obj.y = height - obj.y
-        obj.x = width - obj.x;
+        obj.y = H - obj.y + gameScreen_oy;
+        obj.x = W - obj.x + gameScreen_ox;
     }
 }
 
