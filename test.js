@@ -25,7 +25,7 @@ let projectile_speed_mul = 7;
 let elapsed_time = 0;
 let next_meteorite = 3;
 let firstStart = true;
-let lives = 3;
+let max_lives = 3;
 let endGame;
 let points_str;
 
@@ -71,7 +71,7 @@ function setup()
     space_ship.points = 0;
 
     
-    space_ship.lives = lives;
+    space_ship.lives = max_lives;
     //How much the angular speed will increment 
     space_ship.angular_acc = 0.05;
 
@@ -278,10 +278,7 @@ function play(delta)
 {
     //time counter
     elapsed_time+=delta;
-
    
-    
-
     if(elapsed_time/60 > next_meteorite)
     {
         if(meteorite_array.length < 8)
@@ -329,7 +326,7 @@ function play(delta)
         {
             //Delete one live's icon
             app.stage.removeChild(lives_array.pop());
-            lives -= 1;      
+            space_ship.lives -= 1;      
             //Spaceship to default position
             space_ship.x = (gameScreen_ox+gameScreen_x)/2;
             space_ship.y = (gameScreen_oy+gameScreen_y)/2;
@@ -338,7 +335,7 @@ function play(delta)
             meteorite_array.splice(i,1);
             aux.destroy();
 
-            if(lives == -1)
+            if(space_ship.lives == -1)
             {
                 while(meteorite_array.length > 0) meteorite_array.pop().destroy();
                 state = endGame_;
@@ -355,6 +352,7 @@ function play(delta)
             {
                 app.stage.removeChild(aux2);
                 projectile_array.splice(j,1);
+                aux2.destroy();
                 //Auxiliar vars
                 old_x = aux.x
                 old_y = aux.y
@@ -395,6 +393,7 @@ function play(delta)
             aux.vy += randomNumber(0.05, -0.05);
             infinitifyCoord(aux);
         }
+        else aux.destroy();
 
         
         refreshPoints();
@@ -402,7 +401,7 @@ function play(delta)
     }
 }
 
-//GAME OVER. Maybe we need a restart button?
+//GAME OVER. Do we need a restart button?
 function endGame_()
 {
     app.stage.removeChild(space_ship);
