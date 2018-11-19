@@ -6,14 +6,18 @@ let height = 800;
 let app = new PIXI.Application({ width: width, height: height });
 let space_ship;
 let state;
-let left, right, up, down;
+let left, right, up, down, fire, space;
 let projectile_array = [];
 let meteorite_array = [];
+let lives_array = [];
 //Vars for general speed and movements
 let booster_on=false;
 let projectile_speed_mul = 7;
 let elapsed_time = 0;
-let next_meteorite = 9;
+let next_meteorite = 3;
+let firstStart = true;
+let lives = 3;
+let endGame;
 
 
 document.body.appendChild(app.view);
@@ -31,9 +35,10 @@ function setup()
         40,16
     ]);
 
-
-    
-   
+    //Game Over screen
+    endGame = new PIXI.Container();
+    app.stage.addChild(endGame);
+    endGame.visible = false;
 
     //Convert the spaceship drawing to a sprite   
     space_ship = new PIXI.Sprite(triangle.generateCanvasTexture());
@@ -48,12 +53,28 @@ function setup()
     space_ship.anchor.y = 0.5;
     space_ship.rotation = 0;
     space_ship.av = 0;
+    space_ship.point = 0;
+    
+    space_ship.lives = lives;
     //How much the angular speed will increment 
     space_ship.angular_acc = 0.05;
     
 
     //Add the spaceship sprite to the stage    
     app.stage.addChild(space_ship);
+
+    //Create lives icon
+    for(i=0; i<space_ship.lives; i++)
+    {
+        let live = new PIXI.Sprite(triangle.generateCanvasTexture());
+        live.rotation = -Math.PI/2;
+        live.scale.x = 0.7;
+        live.scale.y = 0.7;
+        live.x = 20 + i*30;
+        live.y = 45;
+        app.stage.addChild(live);
+        lives_array.push(live);
+    }
 
     //Set the keyboard events
     left = keyboard("ArrowLeft");
@@ -166,7 +187,6 @@ function fireBullet()
 
 function spawnMeteorite(dim = 40)
 {
-    console.log("SPAWNNN "+dim);
     let meteorite_draw = new PIXI.Graphics();
     meteorite_draw.lineStyle(3, 0xFFFFFF);
     temp_x = randomNumber(width);
@@ -188,15 +208,11 @@ function spawnMeteorite(dim = 40)
     meteorite_array.push(meteorite);
     app.stage.addChild(meteorite);
     
-    return meteorite
-    
+    return meteorite  
 }
 
 //Random number generator with max as upperbound
-function randomNumber(max, min=0)
-{
-    return Math.random() * (max - min) + min;
-}
+function randomNumber(max, min=0){return Math.random() * (max - min) + min;}
 
 function gameLoop(delta)
 {
@@ -209,27 +225,27 @@ function play(delta)
     //time counter
     elapsed_time+=delta;
 
-    if(elapsed_time/60 > next_meteorite)
-    {
-        if(meteorite_array.length < 6)
-            spawnMeteorite();
-        elapsed_time=0;
-        next_meteorite = randomNumber(3,8);
-    }
+ 
+        
     
 
-    //if(elapsed_time/60 == randomNumber())
+    if(elapsed_time/60 > next_meteorite)
+    {
+        if(meteorite_array.length < 8)
+            spawnMeteorite();
+        //Reset the counter so it doesn't overflow
+        elapsed_time=0;
+        next_meteorite = randomNumber(3,5);
+    }
 
-
-    //Refresh the speed vectory every frame
+    //Refresh the speed vector every frame
     refreshVelocity();
     space_ship.x += space_ship.vx;
     space_ship.y += space_ship.vy;
     space_ship.rotation += space_ship.av;
-    infinitifyCoord(space_ship);
-    
+    infinitifyCoord(space_ship);   
 
-    //Bullet speed management
+    //Bullet's speed management
     for(i=0;i<projectile_array.length; i++)
     {
         aux = projectile_array[i];
@@ -242,6 +258,8 @@ function play(delta)
              app.stage.removeChild(aux);
              //If a bullet is dead we need to remove it from the array 
              projectile_array.splice(i,1);
+             aux.destroy();
+             break;
         }
         else
             infinitifyCoord(aux);
@@ -252,11 +270,27 @@ function play(delta)
     {
         let aux = meteorite_array[i];
 
-        //Collision Manager
+        //Collision Manager METEORITE vs SPACE_SHIP
         if(hitTestRectangle(aux, space_ship) && !aux.colpito)
         {
-            app.stage.removeChild(space_ship);
+            //Delete one live's icon
+            app.stage.removeChild(lives_array.pop());
+            lives -= 1;      
+            //Spaceship to default position
+            space_ship.x = 200;
+            space_ship.y = 200;
+            //Delete the asteroid 
             app.stage.removeChild(aux);
+            meteorite_array.splice(i,1);
+            aux.destroy();
+
+            if(lives == -1)
+            {
+                while(meteorite_array.length > 0) meteorite_array.pop().destroy();
+                state = endGame_;
+            }
+
+            break;
         }
         
         for(j = 0; j<projectile_array.length; j++)
@@ -264,60 +298,75 @@ function play(delta)
             aux2 = projectile_array[j];
             if(hitTestRectangle(aux, aux2)) 
             {
-                console.log("Colpito"+i+"   "+j)
                 app.stage.removeChild(aux2);
                 projectile_array.splice(j,1);
-                
+                //Auxiliar vars
                 old_x = aux.x
                 old_y = aux.y
+                //Remove the meteorite
                 app.stage.removeChild(aux);
                 meteorite_array.splice(i,1);
+                
 
                 //Spawn 2 new meteorites from the one destroyed
                 if(aux.isFirst)
                 {
+                    //One meteorite splits into two meteorites
                     met1 = spawnMeteorite(25);
                     met2 = spawnMeteorite(25);
-                    
-                        
+                    //They start from the father's position
                     met1.x = old_x;
                     met1.y = old_y;
                     met2.x = old_x;
                     met2.y = old_y;
-               
-                    
+                    //One has the speed opposite to the other
                     met2.vx = -met1.vx;
                     met2.vy = -met1.vy;
                     met1.isFirst = false;
-                    met2.isFirst = false;
-                    
-                    
-                    
-                    app.stage.addChild(met1);
-                    app.stage.addChild(met2);
-                    
-                    
-                }
+                    met2.isFirst = false;   
+                }  
                 
-                
-            }
-            
+            }   
         }
-
-  
         
         if(!aux.colpito)
         {
+            //If no hit then proceed with the position update
             aux.x += aux.vx;
             aux.y += aux.vy;
             aux.vx += randomNumber(0.05, -0.05); 
             aux.vy += randomNumber(0.05, -0.05);
             infinitifyCoord(aux);
         }
+
         
         
 
     }
+}
+
+//GAME OVER. Maybe we need a restart button?
+function endGame_()
+{
+    app.stage.removeChild(space_ship);
+    
+    let style = new PIXI.TextStyle({
+        fontFamily: "Arial",
+        fontSize: 50,
+        fill: "white",
+        stroke: '#ffffff',
+      });
+    let message = new PIXI.Text("GAME OVER", style);
+    message.position.set(width/2, height/2);
+    app.stage.addChild(message);
+
+    left.unsubscribe();
+    right.unsubscribe();
+    up.unsubscribe();
+    down.unsubscribe();
+    space.unsubscribe();
+    fire.unsubscribe();
+
 }
 
 //Videogame effect: no boundaries in the screen
