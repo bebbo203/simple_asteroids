@@ -93,7 +93,6 @@ function run()
 		star.x = (star.x/star.n);
 		star.y = (star.y/star.n);
 		star.n += 0.0001;
-		if(i==0) console.log(star.x +" "+star.y);
 		
 
 		var radius = 60;
@@ -112,7 +111,7 @@ function run()
 		{
 			ctx.fillStyle = "white";
 			ctx.beginPath();
-			ctx.arc(star.x+(width/2), star.y+(height/2), 2/star.n, 0, Math.PI*2, true);
+			ctx.arc(star.x+(width/2), star.y+(height/2), 2/(star.n*1.1), 0, Math.PI*2, true);
 			ctx.closePath();
 			ctx.fill();
 		}
