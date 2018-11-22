@@ -1,0 +1,47 @@
+@font-face {
+    font-family: "vectorb-webfont";
+    src: url("fonts/vectorb-webfont.eot");
+    src: url("fonts/vectorb-webfont.woff") format("woff"),
+         url("fonts/vectorb-webfont.otf") format("opentype"),
+         url("fonts/vectorb-webfont.svg#filename") format("svg");
+}
+
+
+body{
+    background-color: #000000;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#welcome{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    transform: translateX(-50%);
+    margin: -360px 0 0 -10px;
+    text-align: center;
+}
+
+h1{
+    font-family: "vectorb-webfont";
+    color: #FFFFFF;
+    font-size: 150px;
+}
+
+button{
+    border: 5px solid white;
+    background-color: black;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    padding: 10px 14px;
+}
+
+canvas{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width:100%;
+height:100%;
+}
