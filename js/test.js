@@ -1,4 +1,4 @@
-/// <reference path="typings/globals/pixi.js/index.d.ts"/>
+/// <reference path="../typings/globals/pixi.js/index.d.ts"/>
 
 let width = 800;
 let height = 800;

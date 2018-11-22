@@ -6,12 +6,17 @@
          url("fonts/vectorb-webfont.svg#filename") format("svg");
 }
 
+* {
+    font-family: "vectorb-webfont";
+    
+}
 
 body{
     background-color: #000000;
     height: 100vh;
     overflow: hidden;
 }
+
 
 #welcome{
     position: absolute;
@@ -24,18 +29,24 @@ body{
 }
 
 h1{
-    font-family: "vectorb-webfont";
     color: #FFFFFF;
     font-size: 150px;
 }
 
 button{
-    border: 5px solid white;
-    background-color: black;
+    border: 3px solid white;
+    background-color: transparent;
     color: white;
     font-size: 40px;
     cursor: pointer;
     padding: 10px 14px;
+    font-weight: 600;
+    transition-duration: 0.5s;
+}
+
+button:hover{
+    background-color:white;
+    color: black;
 }
 
 canvas{
@@ -43,5 +54,5 @@ canvas{
     left: 0;
     top: 0;
     width:100%;
-height:100%;
+    height:100%;
 }
