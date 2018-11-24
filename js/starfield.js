@@ -29,41 +29,13 @@ function createStar(first=false)
 	var star = {x:0, y:0, n:0};
 	var center = 100;
 
-	if(true)
-	{		
-		//First stars have a bigger span that the others
-		star.x = randomNumber(-1*center, center);
-		star.y = randomNumber(-1*center, center);	
-	}
-	else
-	{
-		//Only spawn from one of the 4 sides
-		scelta = Math.floor(randomNumber(1,5));
-		switch(scelta)
-		{
-			case 1: {
-				star.x = -width/2;
-				star.y = randomNumber(-1*height/2, height/2);
-				break;
-			}
-			case 2: {
-				star.x = width/2;
-				star.y = randomNumber(-1*height/2, height/2);
-				break;
-			}
-			case 3: {
-				star.x = randomNumber(-1*width/2, width/2);
-				star.y = -height/2;
-				break;
-			}
-			case 4: {
-				star.x = randomNumber(-1*width/2,width/2);
-				star.y = height/2;
-				break;
-			}
-		}
+		
+	//First stars have a bigger span that the others
+	star.x = randomNumber(-1*center, center);
+	star.y = randomNumber(-1*center, center);	
+	
 
-	}
+	
 	star.n = randomNumber(1.005,1.02);
 	return star;
 }

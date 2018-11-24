@@ -568,4 +568,4 @@ function hitTestRectangle(r1, r2)
 
 
 //Start the game
-setup();
+//setup();

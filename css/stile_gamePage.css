@@ -13,8 +13,69 @@ canvas{
     width: 50%;
     height: 100%;
     border: 1px solid white;
+   
 }
 
+/*SCHERMATA INSERIMENTO NOME*/
+
+#game, canvas{
+    opacity: 0;
+}
+
+#name_selection{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background-color:black;
+    z-index: 3;
+    border: 1px solid white;
+}
+
+#insert_label{
+    color: white;
+    font-weight: 600;
+    font-size: 50px;
+    left: 50%;
+    top: 50%;
+}
+
+
+#nickname_form{
+    position: absolute;
+    width: 800px;
+    margin-top: 30%;
+    margin-left: 15%;
+ 
+    
+}
+
+#nickname_input{
+    position: absolute;
+    width:500px;
+    margin: 0 60px;
+
+    border: 3px solid white;
+    background-color: transparent;
+    height: 40px;
+    font-family: "vectorb-webfont";
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+    padding-left: 5px;
+}
+#nickname_button{
+    position: absolute;
+    margin-top: 50px;
+    left:33%;
+    padding: 5px 15px;    
+     
+}
+
+
+
+/*--------------------------*/
 
 #scores_wrapper{
     position: fixed;
@@ -23,6 +84,7 @@ canvas{
     width: 50%;
     height: 100%;
     text-align: center;
+    
 }
 
 #scores{
