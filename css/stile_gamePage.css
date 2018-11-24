@@ -10,8 +10,8 @@ canvas{
     position: fixed;
     left: 0;
     top: 0;
-    width: 50%;
-    height: 100%;
+    width: 50vw;
+    height: 100vh;
     border: 1px solid white;
    
 }
@@ -24,10 +24,10 @@ canvas{
 
 #name_selection{
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 50%;
-    height: 100%;
+    top: -0.8vh;
+    left: -0.4vw;
+    width: 50vw;
+    height: 100vh;
     background-color:black;
     z-index: 3;
     border: 1px solid white;
@@ -37,38 +37,40 @@ canvas{
 
 
 #nickname_form{
-    width: 800px;
-    margin-top: 30%;
-    margin-left: 15%;
-    margin: 30% 20vh;
+    width: 80vw;
+    margin-top: 30vh;
+    margin-left: 15vw;
+    margin: 30vh 11vw;
 }
 
 #insert_label{
     color: white;
     font-weight: 600;
-    font-size: 50px;
+    font-size: 5vh;
 
 }
 
 #nickname_input{
     position: absolute;
-    width:500px;
-    margin: 0 60px;
+    width:25vw;
+    margin: -3vh 2vw;
 
-    border: 3px solid white;
+    border: 0.3vh solid white;
     background-color: transparent;
-    height: 40px;
+    height: 4vh;
     font-family: "vectorb-webfont";
-    font-size: 30px;
+    font-size: 3vh;
     font-weight: 600;
     color: white;
-    padding-left: 5px;
+    padding-left: 0.5vw;
 }
 #nickname_button{
     position: relative;
-    margin-top: 50px;
-    margin-left: 28vh;
-    padding: 5px 15px;    
+    margin-top: 2vh;
+    margin-left: 12.5vw;
+    padding: 0.5vh 0.8vw;   
+    font-size: 3.5vh;
+     
      
 }
 
@@ -78,23 +80,22 @@ canvas{
 
 #scores_wrapper{
     position: fixed;
-    left: 50%;
+    left: 100vh;
     top: 0;
-    width: 50%;
-    height: 100%;
+    width: 50vw;
+    height: 100vh;
     text-align: center;
     
 }
 
 #scores{
     color: white;
-    display: inline-block;
+    
 }
 
 
 #title{
-    font-size: 40px;
+    font-size: 5vh;
     font-weight: 800;
-    text-align: center;
 }
 

@@ -4,6 +4,10 @@
 		<meta charset="utf-8">
 		<link rel=stylesheet href="../css/global_settings.css" type="text/css">
 		<link rel=stylesheet href="../css/stile_gamePage.css" type="text/css">
+		<script src="../js/jquery-3.3.1.min.js"></script>
+		<script src="../js/pixi.min.js"></script>
+		<script src="../js/point_handler.js"></script>
+		
 		<title>SIMPLE ASTEROIDS</title>
 		
 	</head>
@@ -12,18 +16,18 @@
 
 	<body>
 
+		<!-- action="#" and type="button" prevent the page to refresh on submit-->
 		<div id="name_selection">
-			<form id="nickname_form">
+			<form id="nickname_form" action="#" >
 				<p id="insert_label"> INSERT NICKNAME: </p>
-				<input id="nickname_input" type="text" size="50"> <br>
-				<button id="nickname_button" type="submit">OK</button>
+				<input id="nickname_input" type="text" size="50" autocomplete="off"> <br>
+				<button id="nickname_button" type="button" onclick="getNickname();">OK</button>
 			</form>
 		</div>
 
 		
 		
 		<div id="game">
-			<script src="../js/pixi.min.js"></script>
 			<script src="../js/game.js"></script>
 		</div> 
 
