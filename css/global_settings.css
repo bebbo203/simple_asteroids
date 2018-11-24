@@ -11,9 +11,9 @@ button{
     background-color: transparent;
     font-family: "vectorb-webfont";
     color: white;
-    font-size: 40px;
+    font-size: 4vh;
     cursor: pointer;
-    padding: 10px 14px;
+    padding: 1vh 1.4vh;
     font-weight: 600;
     transition-duration: 0.5s;
 }
