@@ -23,7 +23,7 @@ canvas{
 }
 
 #name_selection{
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     width: 50%;
@@ -33,22 +33,21 @@ canvas{
     border: 1px solid white;
 }
 
+
+
+
+#nickname_form{
+    width: 800px;
+    margin-top: 30%;
+    margin-left: 15%;
+    margin: 30% 20vh;
+}
+
 #insert_label{
     color: white;
     font-weight: 600;
     font-size: 50px;
-    left: 50%;
-    top: 50%;
-}
 
-
-#nickname_form{
-    position: absolute;
-    width: 800px;
-    margin-top: 30%;
-    margin-left: 15%;
- 
-    
 }
 
 #nickname_input{
@@ -66,9 +65,9 @@ canvas{
     padding-left: 5px;
 }
 #nickname_button{
-    position: absolute;
+    position: relative;
     margin-top: 50px;
-    left:33%;
+    margin-left: 28vh;
     padding: 5px 15px;    
      
 }
