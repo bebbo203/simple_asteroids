@@ -7,6 +7,7 @@
 		<script src="../js/jquery-3.3.1.min.js"></script>
 		<script src="../js/pixi.min.js"></script>
 		<script src="../js/point_handler.js"></script>
+
 		
 		<title>SIMPLE ASTEROIDS</title>
 		
@@ -16,17 +17,31 @@
 
 	<body>
 
-		<!-- action="#" and type="button" prevent the page to refresh on submit-->
+		
+		<!-- I don't want the page to refresh after submit-->
 		<div id="name_selection">
 			<form id="nickname_form" action="#" >
 				<p id="insert_label"> INSERT NICKNAME: </p>
-				<input id="nickname_input" type="text" size="50" autocomplete="off"> <br>
-				<button id="nickname_button" type="button" onclick="getNickname();">OK</button>
+				<input id="nickname_input" type="text" size="50" maxlength="10" autocomplete="off"> <br>
+				<button id="nickname_button" type="submit">OK</button>
 			</form>
 		</div>
+		<script>
+			$(document).ready(function() {
+    			$(document).on('submit', '#nickname_form', function() {
+					getNickname()
+					createTable();
+					setup();
+      				return false;
+     			});
+			});
+		</script>
+		
+		<div id="restart_game">
+		
+		</div>
 
-		
-		
+
 		<div id="game">
 			<script src="../js/game.js"></script>
 		</div> 
@@ -34,11 +49,13 @@
 		<div id="scores_wrapper">
 			<div id="scores">
 				<p id="title">HIGHSCORES</p>
+				<!--Dinamically added table-->
+				<table id="scores_table"></table>
 			</div>
 		</div>
 		
 		
-		
+		<script> createTable() </script>
 
 	
 	</body>
