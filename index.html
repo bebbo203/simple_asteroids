@@ -4,6 +4,10 @@
 		<meta charset="utf-8">
 		<title>SIMPLE ASTEROIDS</title>
 		<link rel=stylesheet href="css/stile_landing.css" type="text/css">
+		<link rel=stylesheet href="css/font_global.css" type="text/css">
+		<!--Library that makes things shake-->
+		<link rel="stylesheet" type="text/css" href="css/csshake/dist/csshake.min.css">
+
 	</head>
 
 
@@ -13,7 +17,9 @@
 		<script src="js/starfield.js"></script>
 		
 		<div id="welcome">
-			<h1> ASTEROIDS </h1>
+			<!--I need to add the class to make it shaking. External library-->
+			<h1 class="shake-slow shake-constant shake-constant--hover"> ASTEROIDS </h1>
+			<!--Start button. It takes you to the game page.-->
 			<button id="start" onclick="location.href='html/game_page.html';"> START </button>
 		</div>
 

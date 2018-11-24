@@ -1,0 +1,31 @@
+body{
+    position: relative;
+    font-family: "vectorb-webfont";
+    height: 100vh;
+    overflow: hidden;
+    background-color: black;
+}
+
+canvas{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    border: 1px solid white;
+}
+
+#scores{
+    position: fixed;
+    left: 50%;
+    top: 0;
+    color: white;
+}
+
+#title{
+    position: absolute;
+    font-weight: 600;
+    font-size: 35px;
+    left: 250px;
+    top: -20px;
+}

@@ -1,11 +1,3 @@
-@font-face {
-    font-family: "vectorb-webfont";
-    src: url("fonts/vectorb-webfont.eot");
-    src: url("fonts/vectorb-webfont.woff") format("woff"),
-         url("fonts/vectorb-webfont.otf") format("opentype"),
-         url("fonts/vectorb-webfont.svg#filename") format("svg");
-}
-
 * {
     font-family: "vectorb-webfont";
     

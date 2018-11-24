@@ -1,15 +1,15 @@
 /// <reference path="../typings/globals/pixi.js/index.d.ts"/>
 
-let width = 800;
-let height = 800;
+let width = document.body.clientWidth/2;
+let height = document.body.clientHeight;
 let background;
 
 //I need a var for the virtual screen
 //gameScreen dimensions
-gameScreen_x = 500;
-gameScreen_y = 800;
+gameScreen_x = width;
+gameScreen_y = height;
 //gameScreen origin
-gameScreen_ox = 300;
+gameScreen_ox = 0;
 gameScreen_oy = 0;
 
 let app = new PIXI.Application({ width: width, height: height });
@@ -35,6 +35,16 @@ document.body.appendChild(app.view);
 
 function setup()
 {
+    //Load the font
+    /*var junction_font = new FontFace('vectorb-family', 'url(fonts/junction-regular.woff)');
+    junction_font.load().then(function(loaded_face) {
+	document.fonts.add(loaded_face);
+    document.body.style.fontFamily = '"Junction Regular", Arial';}).catch(function(error) 
+     {
+	// error occurred
+    });*/
+
+
 
     //Draw the spaceship shape
     let triangle = new PIXI.Graphics(true);
@@ -52,7 +62,7 @@ function setup()
 
     //Load the background
     //background = new PIXI.Sprite.fromImage(document.getElementById("bg").src = "bg.png");
-    background = new PIXI.Sprite.fromImage("bg.png");
+    
 
     //Convert the spaceship drawing to a sprite   
     space_ship = new PIXI.Sprite(triangle.generateCanvasTexture());
@@ -76,27 +86,28 @@ function setup()
     space_ship.angular_acc = 0.05;
 
     //Add the points to the screen
-    let style = new PIXI.TextStyle({
-        fontFamily: "Arial",
+    //refreshPoints();
+    /*let style = new PIXI.TextStyle({
+        fontFamily: "vectorb-webfont",
+        fontWeight: 600,
         fontSize: 30,
         fill: "white",
         stroke: '#ffffff',
       });
     points_str = new PIXI.Text(""+space_ship.points, style);
     points_str.position.set((gameScreen_ox+gameScreen_x)-100, gameScreen_oy+15);
-    app.stage.addChild(points_str);
+    app.stage.addChild(points_str);*/
     
 
     //Add the spaceship sprite to the stage    
     app.stage.addChild(space_ship);
-    app.stage.addChild(background);
     
-    //DEBUG
-    let cornice_draw = new PIXI.Graphics(true);
+    //+++++++++++++++++++++++++++++++++++++DEBUG
+    /*let cornice_draw = new PIXI.Graphics(true);
     cornice_draw.lineStyle(2,0xFF0000);
     cornice_draw.drawRect(gameScreen_ox,gameScreen_oy, gameScreen_x, gameScreen_y)
-    app.stage.addChild(cornice_draw);
-    //DEBUG
+    app.stage.addChild(cornice_draw);*/
+    //+++++++++++++++++++++++++++++++++++++DEBUG
 
     //Create lives icon
     for(i=0; i<space_ship.lives; i++)
@@ -164,6 +175,10 @@ function setup()
     };*/
 
 
+    //Start the game with 5 meteorite in the canvas
+    for(i=0;i<5;i++)
+        spawnMeteorite();
+
     //Set the game state
     state = play;
     //Start the game loop
@@ -199,20 +214,22 @@ function refreshVelocity()
 }
 
 //Helper to update the points string on the screen
+//We need to define the style
+let point_style = new PIXI.TextStyle({
+    fontFamily: "vectorb-webfont",
+    fontWeight: 700,
+    fontSize: 30,
+    fill: "white",
+    stroke: '#ffffff',
+    padding: 20
+  });
 function refreshPoints()
 {
     //Add the points to the screen
     app.stage.removeChild(points_str)
-    let style = new PIXI.TextStyle({
-        fontFamily: "Arial",
-        fontSize: 30,
-        fill: "white",
-        stroke: '#ffffff',
-      });
-    points_str = new PIXI.Text(""+space_ship.points, style);
-    points_str.position.set((gameScreen_ox+gameScreen_x)-100, gameScreen_oy+15);
+    points_str = new PIXI.Text(""+space_ship.points, point_style);
+    points_str.position.set((gameScreen_ox+gameScreen_x)-100, gameScreen_oy+20);
     app.stage.addChild(points_str);
-
 }
 
 function fireBullet()
@@ -283,7 +300,7 @@ function play(delta)
     {
         if(meteorite_array.length < 8)
             spawnMeteorite();
-        //Reset the counter so it doesn't overflow
+        //Reset the counter so it doesn't overflow 
         elapsed_time=0;
         next_meteorite = randomNumber(3,5);
         
@@ -408,13 +425,14 @@ function endGame_()
     app.stage.removeChild(points_str);
     
     let style = new PIXI.TextStyle({
-        fontFamily: "Arial",
+        fontFamily: "vectorb-webfont",
         fontSize: 50,
         fill: "white",
         stroke: '#ffffff',
+        fontWeight: 900
       });
     let message = new PIXI.Text("GAME OVER", style);
-    message.position.set((gameScreen_ox+gameScreen_x)/2, (gameScreen_oy+gameScreen_y)/2);
+    message.position.set((gameScreen_ox+gameScreen_x)/2 - 180, (gameScreen_oy+gameScreen_y)/2 - 50);
     app.stage.addChild(message);
 
     left.unsubscribe();
