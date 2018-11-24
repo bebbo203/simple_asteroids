@@ -29,6 +29,11 @@ let max_lives = 1;
 let endGame;
 let points_str;
 
+//I need it for the ticker
+let RESTART = 0;
+//GAME OVER label
+let end_message;
+
 
 document.body.appendChild(app.view);
 
@@ -45,6 +50,16 @@ function setup()
     });*/
 
 
+    //Reset the RESTART page
+    console.log("ANCHE QUI")
+    var restart_div = document.getElementById("restart_game");
+    restart_div.style.opacity=0;
+    var restart_button = document.getElementById("restart_button");
+    restart_button.style.pointerEvents = "none";
+    app.stage.removeChild(end_message);
+    booster_on = false;
+
+
 
     //Draw the spaceship shape
     let triangle = new PIXI.Graphics(true);
@@ -56,9 +71,7 @@ function setup()
     ]);
 
     //Game Over screen
-    endGame = new PIXI.Container();
-    app.stage.addChild(endGame);
-    endGame.visible = false;
+    
 
     //Load the background
     //background = new PIXI.Sprite.fromImage(document.getElementById("bg").src = "bg.png");
@@ -182,7 +195,10 @@ function setup()
     //Set the game state
     state = play;
     //Start the game loop
-    app.ticker.add(delta => gameLoop(delta));
+    if(!RESTART)
+        app.ticker.add(delta => gameLoop(delta));
+    else
+        app.ticker.start();
 
     
 }
@@ -448,13 +464,15 @@ function endGame_()
         stroke: '#ffffff',
         fontWeight: 900
       });
-    let message = new PIXI.Text("GAME OVER", style);
-    message.position.set((gameScreen_ox+gameScreen_x)/2 - 180, (gameScreen_oy+gameScreen_y)/2 - 50);
-    app.stage.addChild(message);
+    end_message = new PIXI.Text("GAME OVER", style);
+    end_message.position.set((gameScreen_ox+gameScreen_x)/2 - 180, (gameScreen_oy+gameScreen_y)/2 - 50);
+    app.stage.addChild(end_message);
 
    
     var restart_div = document.getElementById("restart_game");
-
+    restart_div.style.opacity=1;
+    var restart_button = document.getElementById("restart_button");
+    restart_button.style.pointerEvents = "auto";
 
 
     left.unsubscribe();
@@ -464,8 +482,9 @@ function endGame_()
     space.unsubscribe();
     fire.unsubscribe();
     app.ticker.stop();
-
-    return;
+     
+    RESTART = 1;
+    
 
 }
 

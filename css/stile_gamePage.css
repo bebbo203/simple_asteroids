@@ -106,6 +106,16 @@ canvas{
 }
 
 #restart_game{
+    position: absolute;
+    top: 0;
+    left: 0;
     opacity: 0;
     z-index: 5;
+}
+
+#restart_button{
+    position: relative;
+    pointer-events: none;
+    top: 51vh;
+    left: 37vh;
 }
