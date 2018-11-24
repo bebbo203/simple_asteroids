@@ -15,17 +15,25 @@ canvas{
     border: 1px solid white;
 }
 
-#scores{
+
+#scores_wrapper{
     position: fixed;
     left: 50%;
     top: 0;
-    color: white;
+    width: 50%;
+    height: 100%;
+    text-align: center;
 }
 
-#title{
-    position: absolute;
-    font-weight: 600;
-    font-size: 35px;
-    left: 250px;
-    top: -20px;
+#scores{
+    color: white;
+    display: inline-block;
 }
+
+
+#title{
+    font-size: 40px;
+    font-weight: 800;
+    text-align: center;
+}
+
