@@ -25,7 +25,7 @@ let projectile_speed_mul = 7;
 let elapsed_time = 0;
 let next_meteorite = 3;
 let firstStart = true;
-let max_lives = 3;
+let max_lives = 1;
 let endGame;
 let points_str;
 
@@ -183,6 +183,8 @@ function setup()
     state = play;
     //Start the game loop
     app.ticker.add(delta => gameLoop(delta));
+
+    
 }
 
 
@@ -287,7 +289,14 @@ function randomNumber(max, min=0){return Math.random() * (max - min) + min;}
 
 function gameLoop(delta)
 {
-    state(delta);
+    if(state != endGame_)
+        state(delta);
+    else
+        {
+            endGame_();
+            
+        }
+
 }
 
 
@@ -397,6 +406,10 @@ function play(delta)
                     met1.isFirst = false;
                     met2.isFirst = false;   
                 }  
+
+                refreshPoints();
+                updatePoints(space_ship.points);
+                createTable();
                 
             }   
         }
@@ -413,7 +426,10 @@ function play(delta)
         else aux.destroy();
 
         
-        refreshPoints();
+        
+        
+
+        
 
     }
 }
@@ -421,6 +437,7 @@ function play(delta)
 //GAME OVER. Do we need a restart button?
 function endGame_()
 {
+    updatePoints(space_ship.points);
     app.stage.removeChild(space_ship);
     app.stage.removeChild(points_str);
     
@@ -435,12 +452,20 @@ function endGame_()
     message.position.set((gameScreen_ox+gameScreen_x)/2 - 180, (gameScreen_oy+gameScreen_y)/2 - 50);
     app.stage.addChild(message);
 
+   
+    var restart_div = document.getElementById("restart_game");
+
+
+
     left.unsubscribe();
     right.unsubscribe();
     up.unsubscribe();
     down.unsubscribe();
     space.unsubscribe();
     fire.unsubscribe();
+    app.ticker.stop();
+
+    return;
 
 }
 

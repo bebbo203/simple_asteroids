@@ -63,6 +63,7 @@ canvas{
     font-weight: 600;
     color: white;
     padding-left: 0.5vw;
+    text-align: center;
 }
 #nickname_button{
     position: relative;
@@ -70,8 +71,6 @@ canvas{
     margin-left: 12.5vw;
     padding: 0.5vh 0.8vw;   
     font-size: 3.5vh;
-     
-     
 }
 
 
@@ -99,3 +98,14 @@ canvas{
     font-weight: 800;
 }
 
+#scores_table{
+    font-weight: 600;
+    font-size: 3vh;
+    margin-left: 1vw;
+
+}
+
+#restart_game{
+    opacity: 0;
+    z-index: 5;
+}
