@@ -105,16 +105,16 @@ function createTable()
 
         order_cell.innerHTML = i+1+".";
 
-        name_cell.width = "50vw";
+        //name_cell.width = "50vw";
         name_cell.innerHTML = entry.nickname;
 
         date_cell.innerHTML = entry.record_date;
         date_cell.style.fontSize ="2vh";
 
         //Add a cell that spaces the names from the points
-        space_cell.style.width = "20vw";
+        space_cell.style.width = "10vw";
         space_cell.style.fontSize="2vh";
-        for(j=0;j<30;j++)space_cell.innerHTML+=".";
+        for(j=0;j<25;j++)space_cell.innerHTML+=".";
         
         
         record_cell.innerHTML = entry.record;
