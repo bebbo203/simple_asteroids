@@ -1,6 +1,0 @@
-{
-  "dependencies": {},
-  "globalDependencies": {
-    "pixi.js": "registry:dt/pixi.js#4.4.0+20170311014322"
-  }
-}
