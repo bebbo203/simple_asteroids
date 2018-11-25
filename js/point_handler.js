@@ -8,7 +8,8 @@ function getNickname()
 {
     nickname_input = document.getElementById("nickname_input");
     nickname = nickname_input.value.toUpperCase();
-
+    if(nickname=="") 
+        nickname = "ANONYMOUS";    
     
     //Profile handler
     profilo = localStorage.getItem(nickname);
@@ -43,6 +44,8 @@ function getNickname()
 function updatePoints(points)
 {
     profilo.points = points;
+
+    console.log(profilo.record);
     //Update record and date of record
     if(profilo.points > profilo.record || profilo.points == 0) 
     {
@@ -66,10 +69,7 @@ function getRecords()
     keys = Object.keys(localStorage);
     i = keys.length;
     while(i--)
-    {
         records.push(localStorage.getItem(keys[i]));
-        console.log(localStorage.getItem(keys[i]));
-    }
 
     return records;
 }
@@ -101,11 +101,31 @@ function createTable()
         var space_cell = row.insertCell(3);
         var record_cell = row.insertCell(4);
         
+        //Color settings
+        if(profilo != null && entry.nickname == profilo.nickname)
+            color = "#AAAAAA";
+        else    
+            color = "#FFFFFF";
 
 
+        order_cell.style.color = color;
+        name_cell.style.color = color;
+        date_cell.style.color = color;
+        record_cell.style.color = color;
+        space_cell.style.color = color;
+
+        //Colors of the podium
+        if(i<3)
+        {
+            switch(i){
+                case(0): order_cell.style.color = "#FFD700"; break;
+                case(1): order_cell.style.color = "#C0C0C0"; break;
+                case(2): order_cell.style.color = "#CD7F32"; break;
+            }
+
+        }
+        
         order_cell.innerHTML = i+1+".";
-
-        //name_cell.width = "50vw";
         name_cell.innerHTML = entry.nickname;
 
         date_cell.innerHTML = entry.record_date;
@@ -114,14 +134,14 @@ function createTable()
         //Add a cell that spaces the names from the points
         space_cell.style.width = "10vw";
         space_cell.style.fontSize="2vh";
-        for(j=0;j<25;j++)space_cell.innerHTML+=".";
+        for(j=0;j<22;j++)space_cell.innerHTML+=".";
         
         
         record_cell.innerHTML = entry.record;
     }
 }
 
-//I need a function to compare the records of every entry
+//I need a comparator for the records of every entry
 function compareProfiles(a, b)
 {
     var A = parseInt(a.record);
