@@ -79,7 +79,7 @@ canvas{
 
 #scores_wrapper{
     position: fixed;
-    left: 100vh;
+    left: 50vw;
     top: 0;
     width: 50vw;
     height: 100vh;
@@ -94,6 +94,7 @@ canvas{
 
 
 #title{
+    margin: 1vh 1vw;
     font-size: 5vh;
     font-weight: 800;
 }
@@ -101,7 +102,9 @@ canvas{
 #scores_table{
     font-weight: 600;
     font-size: 3vh;
-    margin-left: 1vw;
+    position: absolute;
+    top: 14vh;
+    left: 0;
 
 }
 

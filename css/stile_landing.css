@@ -12,7 +12,7 @@ body{
 
 #welcome{
     position: absolute;
-    left: 50vh;
+    left: 20vw;
     top: 20vh;
     z-index: 1;
   
@@ -29,10 +29,10 @@ button{
     color: white;
     font-size: 4vh;
     cursor: pointer;
-    padding: 1vh 1.4vh;
+    padding: 1vh 1.4vw;
     font-weight: 600;
     transition-duration: 0.5s;
-    margin-left: 40vh;
+    margin-left: 25vw;
 }
 
 button:hover{
@@ -44,7 +44,6 @@ canvas{
     position: fixed;
     top: 0;
     left: 0;
-    border: 1px solid white;
     width:100%;
     height:100vh;
 }
