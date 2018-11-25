@@ -33,20 +33,19 @@ canvas{
     border: 1px solid white;
 }
 
-
-
-
 #nickname_form{
     width: 80vw;
     margin-top: 30vh;
     margin-left: 15vw;
     margin: 30vh 11vw;
+    
 }
 
 #insert_label{
     color: white;
     font-weight: 600;
     font-size: 5vh;
+    margin-left: -1.8vw;
 
 }
 
@@ -105,6 +104,7 @@ canvas{
     position: absolute;
     top: 14vh;
     left: 0;
+    margin-left: 1vw;
 
 }
 
@@ -120,5 +120,12 @@ canvas{
     position: relative;
     pointer-events: none;
     top: 51vh;
-    left: 37vh;
+    left: 17vw;
+}
+
+#change_nickname_button{
+    position: relative;
+    pointer-events: none;
+    top: 59vh;
+    left: -1.9vw;   
 }

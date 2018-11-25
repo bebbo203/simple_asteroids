@@ -56,6 +56,8 @@ function setup()
     restart_div.style.opacity=0;
     var restart_button = document.getElementById("restart_button");
     restart_button.style.pointerEvents = "none";
+    var change_nickname_button = document.getElementById("change_nickname_button");
+    change_nickname_button.style.pointerEvents = "none";
     app.stage.removeChild(end_message);
     booster_on = false;
 
@@ -308,10 +310,7 @@ function gameLoop(delta)
     if(state != endGame_)
         state(delta);
     else
-        {
-            endGame_();
-            
-        }
+        endGame_();
 
 }
 
@@ -450,12 +449,25 @@ function play(delta)
     }
 }
 
-//GAME OVER. Do we need a restart button?
+//GAME OVER. Do we need a restart button? YESSSSSS
 function endGame_()
 {
     updatePoints(space_ship.points);
     app.stage.removeChild(space_ship);
     app.stage.removeChild(points_str);
+
+    //Remove all the meteorites and bullets.
+    //Memory management
+    for(i=0;i<meteorite_array.length;i++)
+    {
+        app.stage.removeChild(meteorite_array[i]);
+        meteorite_array[i].destroy();
+    }
+    for(i=0;i<projectile_array.length;i++)
+    {
+        app.stage.removeChild(projectile_array[i]);
+        projectile_array[i].destroy();
+    }
     
     let style = new PIXI.TextStyle({
         fontFamily: "vectorb-webfont",
@@ -473,6 +485,8 @@ function endGame_()
     restart_div.style.opacity=1;
     var restart_button = document.getElementById("restart_button");
     restart_button.style.pointerEvents = "auto";
+    var change_nickname_button = document.getElementById("change_nickname_button");
+    change_nickname_button.style.pointerEvents = "auto";
 
 
     left.unsubscribe();
