@@ -40,15 +40,6 @@ document.body.appendChild(app.view);
 
 function setup()
 {
-    //Load the font
-    /*var junction_font = new FontFace('vectorb-family', 'url(fonts/junction-regular.woff)');
-    junction_font.load().then(function(loaded_face) {
-	document.fonts.add(loaded_face);
-    document.body.style.fontFamily = '"Junction Regular", Arial';}).catch(function(error) 
-     {
-	// error occurred
-    });*/
-
 
     //Reset the RESTART page
     console.log("ANCHE QUI")
@@ -72,12 +63,6 @@ function setup()
         40,16
     ]);
 
-    //Game Over screen
-    
-
-    //Load the background
-    //background = new PIXI.Sprite.fromImage(document.getElementById("bg").src = "bg.png");
-    
 
     //Convert the spaceship drawing to a sprite   
     space_ship = new PIXI.Sprite(triangle.generateCanvasTexture());
@@ -100,30 +85,8 @@ function setup()
     //How much the angular speed will increment 
     space_ship.angular_acc = 0.05;
 
-    //Add the points to the screen
-    //refreshPoints();
-    /*let style = new PIXI.TextStyle({
-        fontFamily: "vectorb-webfont",
-        fontWeight: 600,
-        fontSize: 30,
-        fill: "white",
-        stroke: '#ffffff',
-      });
-    points_str = new PIXI.Text(""+space_ship.points, style);
-    points_str.position.set((gameScreen_ox+gameScreen_x)-100, gameScreen_oy+15);
-    app.stage.addChild(points_str);*/
-    
-
-    //Add the spaceship sprite to the stage    
     app.stage.addChild(space_ship);
     
-    //+++++++++++++++++++++++++++++++++++++DEBUG
-    /*let cornice_draw = new PIXI.Graphics(true);
-    cornice_draw.lineStyle(2,0xFF0000);
-    cornice_draw.drawRect(gameScreen_ox,gameScreen_oy, gameScreen_x, gameScreen_y)
-    app.stage.addChild(cornice_draw);*/
-    //+++++++++++++++++++++++++++++++++++++DEBUG
-
     //Create lives icon
     for(i=0; i<space_ship.lives; i++)
     {
@@ -179,16 +142,6 @@ function setup()
         console.log("Should spawn");
         spawnMeteorite();
     }
-    
-
-    //I don't think a spaceship can go backward
-  /*down.press = () => {
-        space_ship.vy = space_ship.linear_acc;
-    };
-    down.release = () => {
-        space_ship.vy = 0;
-    };*/
-
 
     //Start the game with 5 meteorite in the canvas
     for(i=0;i<5;i++)
@@ -200,6 +153,7 @@ function setup()
     if(!RESTART)
         app.ticker.add(delta => gameLoop(delta));
     else
+    //I stopped it at the endGame
         app.ticker.start();
 
     
@@ -209,7 +163,6 @@ function setup()
 //Helper to refresh the speed every frame
 function refreshVelocity()
 {
-    //console.log(space_ship.vx+" "+space_ship.vy);
     //If booster is on, apply a constant acceleration to the ship
     if(booster_on)
     {
@@ -456,17 +409,17 @@ function endGame_()
     app.stage.removeChild(space_ship);
     app.stage.removeChild(points_str);
 
-    //Remove all the meteorites and bullets.
+    //Remove all the meteorites and bullets from the stage and from the array
     //Memory management
     for(i=0;i<meteorite_array.length;i++)
     {
         app.stage.removeChild(meteorite_array[i]);
-        meteorite_array[i].destroy();
+        meteorite_array.pop().destroy;
     }
     for(i=0;i<projectile_array.length;i++)
     {
         app.stage.removeChild(projectile_array[i]);
-        projectile_array[i].destroy();
+        projectile_array.pop().destroy();
     }
     
     let style = new PIXI.TextStyle({
@@ -481,6 +434,7 @@ function endGame_()
     app.stage.addChild(end_message);
 
    
+    //Manage the html elements 
     var restart_div = document.getElementById("restart_game");
     restart_div.style.opacity=1;
     var restart_button = document.getElementById("restart_button");
@@ -489,6 +443,7 @@ function endGame_()
     change_nickname_button.style.pointerEvents = "auto";
 
 
+    //We don't need anymore any listener
     left.unsubscribe();
     right.unsubscribe();
     up.unsubscribe();
