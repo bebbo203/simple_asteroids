@@ -32,28 +32,26 @@ canvas{
     background-color:black;
     z-index: 7;
     border: 1px solid white;
+    text-align: center;
 }
 
-#nickname_form{
-    width: 80vw;
-    margin-top: 30vh;
-    margin-left: 15vw;
-    margin: 30vh 11vw;
-    
+#name_selection_wrapper{
+    width: 50vw;
+    text-align: center;
+    margin-top: 35vh;
 }
+
 
 #insert_label{
     color: white;
     font-weight: 600;
     font-size: 3vw;
-    margin-left: -3vw;
-
 }
 
 #nickname_input{
-    position: absolute;
+    position: relative;
+    margin-top: -3vh;
     width:25vw;
-    margin: -3vh 2vw;
 
     border: 0.3vh solid white;
     background-color: transparent;
@@ -66,9 +64,8 @@ canvas{
     text-align: center;
 }
 #nickname_button{
-    position: relative;
-    margin-top: 2vh;
-    margin-left: 12.5vw;
+ 
+    margin-top: 1vh;
     padding: 0.5vh 0.8vw;   
     font-size: 3.5vh;
 }
@@ -82,7 +79,7 @@ canvas{
     left: 50vw;
     top: 0;
     width: 50vw;
-    height: 100vh;
+    height: 99vh;
     text-align: center;
     
 }
