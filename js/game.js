@@ -44,7 +44,7 @@ function setup()
     //Reset the RESTART page
     console.log("ANCHE QUI")
     var restart_div = document.getElementById("restart_game");
-    restart_div.style.opacity=0;
+    restart_div.style.visibility = "hidden";
     var restart_button = document.getElementById("restart_button");
     restart_button.style.pointerEvents = "none";
     var change_nickname_button = document.getElementById("change_nickname_button");
@@ -148,7 +148,7 @@ function setup()
         spawnMeteorite();
 
     //Set the game state
-    state = play;
+    state = endGame_;
     //Start the game loop
     if(!RESTART)
         app.ticker.add(delta => gameLoop(delta));
@@ -431,12 +431,12 @@ function endGame_()
       });
     end_message = new PIXI.Text("GAME OVER", style);
     end_message.position.set((gameScreen_ox+gameScreen_x)/2 - 180, (gameScreen_oy+gameScreen_y)/2 - 50);
-    app.stage.addChild(end_message);
+    //app.stage.addChild(end_message);
 
    
     //Manage the html elements 
     var restart_div = document.getElementById("restart_game");
-    restart_div.style.opacity=1;
+    restart_div.style.visibility = "visible";
     var restart_button = document.getElementById("restart_button");
     restart_button.style.pointerEvents = "auto";
     var change_nickname_button = document.getElementById("change_nickname_button");
@@ -457,7 +457,7 @@ function endGame_()
 
 }
 
-//Videogame effect: no boundaries in the screen
+//Pacman effect: no boundaries in the screen
 //I made a function so everytime you need to move something
 //you pass the latter as the argument
 function infinitifyCoord(obj)
@@ -557,19 +557,25 @@ function hitTestRectangle(r1, r2)
     combinedHalfHeights = r1.halfHeight + r2.halfHeight;
   
     //Check for a collision on the x axis
-    if (Math.abs(vx) < combinedHalfWidths) {
+    if (Math.abs(vx) < combinedHalfWidths) 
+    {
   
       //A collision might be occurring. Check for a collision on the y axis
-      if (Math.abs(vy) < combinedHalfHeights) {
+      if (Math.abs(vy) < combinedHalfHeights) 
+      {
   
         //There's definitely a collision happening
         hit = true;
-      } else {
+      } 
+      else 
+      {
   
         //There's no collision on the y axis
         hit = false;
       }
-    } else {
+    } 
+    else 
+    {
   
       //There's no collision on the x axis
       hit = false;

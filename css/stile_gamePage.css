@@ -13,9 +13,8 @@ canvas{
     left: 0;
     top: 0;
     width: 50vw;
-    height: 100vh;
+    height: 99vh;
     border: 1px solid white;
-   
 }
 
 /*SCHERMATA INSERIMENTO NOME*/
@@ -25,13 +24,13 @@ canvas{
 }
 
 #name_selection{
-    position: absolute;
-    top: -0.8vh;
-    left: -0.4vw;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 50vw;
-    height: 100vh;
+    height: 99vh;
     background-color:black;
-    z-index: 3;
+    z-index: 7;
     border: 1px solid white;
 }
 
@@ -46,8 +45,8 @@ canvas{
 #insert_label{
     color: white;
     font-weight: 600;
-    font-size: 5vh;
-    margin-left: -1.8vw;
+    font-size: 3vw;
+    margin-left: -3vw;
 
 }
 
@@ -96,13 +95,14 @@ canvas{
 
 #title{
     margin: 1vh 1vw;
-    font-size: 5vh;
+    font-size: 3.5vw;
     font-weight: 800;
 }
 
 #scores_table{
     font-weight: 600;
-    font-size: 3vh;
+    font-size: 1.7vw;
+    
     position: absolute;
     top: 14vh;
     left: 0;
@@ -112,22 +112,31 @@ canvas{
 
 #restart_game{
     position: absolute;
-    top: 0;
+    top: 20vh;
     left: 0;
-    opacity: 0;
-    z-index: 5;
+    visibility: hidden;
+    z-index: 9;
+    width: 50vw;
+    text-align: center;
 }
 
+#restart_label{
+    font-weight: 600;
+    color: white;
+    font-size: 5vw;
+}
+
+
 #restart_button{
-    position: relative;
     pointer-events: none;
-    top: 51vh;
-    left: 17vw;
+    margin-top: -5vh;
+    font-size: 2.5vw;
 }
 
 #change_nickname_button{
-    position: relative;
     pointer-events: none;
-    top: 59vh;
-    left: -1.9vw;   
+    margin-top: 1vh;
+    font-size: 2.5vw;
 }
+
+
