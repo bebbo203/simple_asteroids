@@ -148,7 +148,7 @@ function setup()
         spawnMeteorite();
 
     //Set the game state
-    state = endGame_;
+    state = play;
     //Start the game loop
     if(!RESTART)
         app.ticker.add(delta => gameLoop(delta));
