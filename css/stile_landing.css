@@ -9,6 +9,7 @@ body{
     background-color: #000000;
     height: 100vh;
     overflow: hidden;
+    
 }
 
 
@@ -17,13 +18,13 @@ body{
     left: 20vw;
     top: 20vh;
     z-index: 1;
-  
+     
 }
 
 h1{
     color: #FFFFFF;
     font-size: 15vh;
-    margin-left:4.5vw;
+    margin-left: 1vw;
 }
 
 button{
