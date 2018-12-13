@@ -1,0 +1,59 @@
+@import url("global_settings.css");
+
+
+body {
+    font-family: "vectorb-webfont";
+    background: black;
+    font-weight: 600;
+    text-align: center;
+}
+ 
+#title{
+    position: relative;
+    font-weight: 900;
+    font-size: 5vw;
+    margin-top: 2vh;
+    
+}
+
+.testi_div{
+    margin-left: 5vw;
+}
+
+#roberto_div{
+    position: fixed;
+    top: 20vh;
+    width: 50wh;
+}
+
+#daniele_div{
+    position:fixed;
+    left: 50vw;
+    top: 20vh;
+    width: 50wh;
+    text-align: center;
+}
+
+#profile_photo{
+    width: 200px;
+    height: 200px;
+}
+
+.name{
+    font-size: 3vh;
+    color: #999999;
+}
+
+.university{
+    font-size: 1.5vh;
+}
+
+.profile_photo{
+    width: 200px;
+    height: 200px;
+}
+
+.social_link{
+    width: 30px;
+    height: 30px;
+}
