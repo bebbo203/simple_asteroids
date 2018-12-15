@@ -409,7 +409,6 @@ function endGame_()
     app.stage.removeChild(space_ship);
     space_ship.destroy();
     app.stage.removeChild(points_str);
-    if(points_str != null) points_str.destroy();
 
     //Remove all the meteorites and bullets from the stage and from the array
     //Memory management
