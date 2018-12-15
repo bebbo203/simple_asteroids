@@ -9,7 +9,6 @@ body{
     background-color: #000000;
     height: 100vh;
     overflow: hidden;
-    
 }
 
 
@@ -21,8 +20,6 @@ body{
     height: 100vh;
     z-index: 1;
     text-align: center;
-    
-     
 }
 
 h1{
