@@ -225,8 +225,6 @@ function fireBullet()
     //Push the new projectile to the array of projectiles
     projectile_array.push(projectile);
     app.stage.addChild(projectile);
-
-    
 }
 
 //Helper to spawn a meteorite in the game
@@ -426,7 +424,7 @@ function endGame_()
         projectile_array.pop().destroy();
     }
     
-    let style = new PIXI.TextStyle({
+    /*let style = new PIXI.TextStyle({
         fontFamily: "vectorb-webfont",
         fontSize: 50,
         fill: "white",
@@ -434,7 +432,7 @@ function endGame_()
         fontWeight: 900
       });
     end_message = new PIXI.Text("GAME OVER", style);
-    end_message.position.set((gameScreen_ox+gameScreen_x)/2 - 180, (gameScreen_oy+gameScreen_y)/2 - 50);
+    end_message.position.set((gameScreen_ox+gameScreen_x)/2 - 180, (gameScreen_oy+gameScreen_y)/2 - 50);*/
 
    
     //Manage the html elements 
