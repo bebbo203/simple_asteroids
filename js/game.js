@@ -23,7 +23,7 @@ let projectile_speed_mul = 7;
 let elapsed_time = 0;
 let next_meteorite = 3;
 let firstStart = true;
-let max_lives = 1;
+let max_lives = 3;
 let endGame;
 let points_str;
 
@@ -331,7 +331,7 @@ function play(delta)
             meteorite_array.splice(i,1);
             aux.destroy();
 
-            if(space_ship.lives == -1)
+            if(space_ship.lives == 0)
             {
                 while(meteorite_array.length > 0) meteorite_array.pop().destroy();
                 state = endGame_;
