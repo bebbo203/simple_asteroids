@@ -36,7 +36,7 @@ function getNickname()
     $("#game").css("opacity", "1");  
     //Hide the name selection div
     $("#name_selection").css("opacity", "0");
-    $("#nickname_button").attr("disabled", true);
+    $("#nickname_button").css("visibility", "hidden");
     
 }
 
@@ -132,10 +132,12 @@ function createTable()
         date_cell.style.fontSize ="2vh";
 
         //Add a cell that spaces the names from the points
-        space_cell.style.width = "10vw";
+        space_cell.style.width = "20vw";
+        space_cell.style.maxWidth = "20vw";
+        space_cell.style.overflow = "hidden";
         space_cell.style.fontSize="2vh";
-        for(j=0;j<22;j++)space_cell.innerHTML+=".";
-        
+        for(j=0;j<50;j++)space_cell.innerHTML+=".";
+    
         
         record_cell.innerHTML = entry.record;
     }

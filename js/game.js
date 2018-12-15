@@ -1,5 +1,3 @@
-/// <reference path="../typings/globals/pixi.js/index.d.ts"/>
-
 let width = document.body.clientWidth/2;
 let height = document.body.clientHeight;
 let background;
@@ -43,16 +41,20 @@ function setup()
 
     //Reset the RESTART page
     console.log("ANCHE QUI")
-    var restart_div = document.getElementById("restart_game");
+    /*var restart_div = document.getElementById("restart_game");
     restart_div.style.visibility = "hidden";
     var restart_button = document.getElementById("restart_button");
     restart_button.style.pointerEvents = "none";
     var change_nickname_button = document.getElementById("change_nickname_button");
     change_nickname_button.style.pointerEvents = "none";
-    app.stage.removeChild(end_message);
+    app.stage.removeChild(end_message);*/
+    document.getElementById("restart_game").style.visibility = "hidden";
+    document.getElementById("restart_button").style.pointerEvents = "none";
+    document.getElementById("change_nickname_button").style.pointerEvents = "none";
+    
     booster_on = false;
 
-
+    console.log("PARTITO");
 
     //Draw the spaceship shape
     let triangle = new PIXI.Graphics(true);
@@ -407,7 +409,9 @@ function endGame_()
 {
     updatePoints(space_ship.points);
     app.stage.removeChild(space_ship);
+    space_ship.destroy();
     app.stage.removeChild(points_str);
+    if(points_str != null) points_str.destroy();
 
     //Remove all the meteorites and bullets from the stage and from the array
     //Memory management
@@ -431,17 +435,12 @@ function endGame_()
       });
     end_message = new PIXI.Text("GAME OVER", style);
     end_message.position.set((gameScreen_ox+gameScreen_x)/2 - 180, (gameScreen_oy+gameScreen_y)/2 - 50);
-    //app.stage.addChild(end_message);
 
    
     //Manage the html elements 
-    var restart_div = document.getElementById("restart_game");
-    restart_div.style.visibility = "visible";
-    var restart_button = document.getElementById("restart_button");
-    restart_button.style.pointerEvents = "auto";
-    var change_nickname_button = document.getElementById("change_nickname_button");
-    change_nickname_button.style.pointerEvents = "auto";
-
+    document.getElementById("restart_game").style.visibility = "visible";
+    document.getElementById("restart_button").style.pointerEvents = "auto";
+    document.getElementById("change_nickname_button").style.pointerEvents = "auto";
 
     //We don't need anymore any listener
     left.unsubscribe();

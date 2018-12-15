@@ -32,19 +32,7 @@ h1{
    
 }
 
-button{
-    position: relative;
-    border: 3px solid white;
-    background-color: transparent;
-    color: white;
-    font-size: 4vh;
-    cursor: pointer;
-    padding: 1vh 1.4vw;
-    font-weight: 600;
-    transition-duration: 0.9s;
-    margin-top: 10vh;
-    
-}
+
 
 button:hover{
     background-color:white;

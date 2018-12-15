@@ -128,12 +128,14 @@ canvas{
     pointer-events: none;
     margin-top: -5vh;
     font-size: 2.5vw;
+    transition-duration: 0ms;
 }
 
 #change_nickname_button{
     pointer-events: none;
     margin-top: 1vh;
     font-size: 2.5vw;
+    transition-duration: 0ms;
 }
 
 
