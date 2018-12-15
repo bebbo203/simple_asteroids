@@ -13,24 +13,24 @@ body {
     font-weight: 900;
     font-size: 5vw;
     margin-top: 2vh;
-    
 }
 
 .testi_div{
-    margin-left: 5vw;
+    
 }
 
 #roberto_div{
     position: fixed;
     top: 20vh;
-    width: 50wh;
+    width: 50vw;
+    text-align: center;
 }
 
 #daniele_div{
     position:fixed;
     left: 50vw;
     top: 20vh;
-    width: 50wh;
+    width: 50vw;
     text-align: center;
 }
 

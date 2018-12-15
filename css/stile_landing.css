@@ -14,20 +14,26 @@ body{
 
 
 #welcome{
-    position: absolute;
-    left: 20vw;
-    top: 20vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 1;
+    text-align: center;
+    
      
 }
 
 h1{
     color: #FFFFFF;
     font-size: 15vh;
-    margin-left: 1vw;
+    margin-top: 30vh;
+   
 }
 
 button{
+    position: relative;
     border: 3px solid white;
     background-color: transparent;
     color: white;
@@ -35,8 +41,9 @@ button{
     cursor: pointer;
     padding: 1vh 1.4vw;
     font-weight: 600;
-    transition-duration: 0.5s;
-    margin-left: 25vw;
+    transition-duration: 0.9s;
+    margin-top: 10vh;
+    
 }
 
 button:hover{
@@ -53,5 +60,5 @@ canvas{
 }
 
 #about{
-    margin-top: 25vh;
+  position: relative;
 }
