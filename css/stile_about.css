@@ -52,6 +52,15 @@ body {
     text-align: center;
 }
 
+#bottom_div{
+    position: fixed;
+    left: 0vw;
+    top: 80vh;
+    width: 100vw;
+    text-align: center;
+
+}
+
 #profile_photo{
     width: 200px;
     height: 200px;
@@ -59,6 +68,7 @@ body {
 
 .name{
     font-size: 3.5vh;
+    color: white;
     
 }
 

@@ -23,7 +23,7 @@ let projectile_speed_mul = 7;
 let elapsed_time = 0;
 let next_meteorite = 3;
 let firstStart = true;
-let max_lives = 3;
+let max_lives = 1;
 let endGame;
 let points_str;
 
@@ -51,6 +51,8 @@ function setup()
     document.getElementById("restart_game").style.visibility = "hidden";
     document.getElementById("restart_button").style.pointerEvents = "none";
     document.getElementById("change_nickname_button").style.pointerEvents = "none";
+    document.getElementById("home_button").style.pointerEvents = "none";
+
     
     booster_on = false;
 
@@ -438,6 +440,8 @@ function endGame_()
     document.getElementById("restart_game").style.visibility = "visible";
     document.getElementById("restart_button").style.pointerEvents = "auto";
     document.getElementById("change_nickname_button").style.pointerEvents = "auto";
+    document.getElementById("home_button").style.pointerEvents = "auto";
+
 
     //We don't need anymore any listener
     left.unsubscribe();

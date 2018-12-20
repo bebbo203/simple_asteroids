@@ -4,8 +4,8 @@ body{
     position: relative;
     font-family: "vectorb-webfont";
     height: 100vh;
-    overflow: hidden;
     background-color: black;
+    overflow: hidden;
 }
 
 canvas{
@@ -138,4 +138,10 @@ canvas{
     transition-duration: 0ms;
 }
 
+#home_button{
+    pointer-events: none;
+    margin-top: 1vh;
+    font-size: 2.5vw;
+    transition-duration: 0ms;
+}
 
